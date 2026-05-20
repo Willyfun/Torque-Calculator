@@ -1,0 +1,19 @@
+/* Normal button */
+.btn {
+  padding: 10px 20px;
+  border: 2px solid green;
+  background: white;
+  color: green;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+/* Selected button - only shows when active class is added */
+.btn.active {
+  background: green;
+  color: white;
+}
+
+#dropdown{
+  display: none;
+}
