@@ -9,7 +9,17 @@
 <body>
     <div class = "card">
         <h1>Motor Parameter</h1>
-
+        <span>Please choose what to calculate:</span>
+        <div>
+            <button onclick="chooseParameter('speed')">Speed</button>
+            <button onclick="chooseParameter('power')">Power</button>
+            <button onclick="chooseParameter('torque')">Torque</button>
+        </div>
+        <div class="torque">
+            <label for="torque_nm">Torque (Nm)</label>
+            <input type="number" id="torque_nm" placeholder="e.g. 100">
+            <span class="unit">Nm</span>
+        </div>
         <div class="power">
             <label for="power_w">Power (W)</label>
             <input type="number" id="power_w" placeholder="e.g. 100">

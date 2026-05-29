@@ -1,5 +1,40 @@
 let select = "";
 let selectedStage = 0;
+let selectedParameter = "";
+
+const formula = {
+    power :{
+        required:["speed","torque"],
+        formula:({speed,torque}) => (torque*speed)/9.55,
+        unit:"W"
+    },
+
+    torque :{
+        required:["speed","power"],
+        formula:({speed,power}) => (9.55*power)/speed,
+        unit:"Nm"
+    },
+
+    speed :{
+        required:["torque","power"],
+        formula:({torque,power}) => (9.55*power)/torque,
+        unit:"RPM"
+    }
+};
+
+function chooseParameter(parameter){
+    selectedParameter = parameter;
+
+    document.querySelector(".power").style.display = "none";
+    document.querySelector(".torque").style.display = "none";
+    document.querySelector(".speed").style.display = "none";
+
+    const requiredInputs = formula[parameter].required;
+
+    requiredInputs.forEach(input => {
+        document.querySelector("." + input).style.display = "block";
+    });
+}
 
 function calculate_torque() {
 
