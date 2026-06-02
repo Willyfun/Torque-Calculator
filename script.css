@@ -17,3 +17,7 @@
 #dropdown{
   display: none;
 }
+
+input{
+  width: 80px;
+}

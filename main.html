@@ -15,41 +15,43 @@
             <button onclick="chooseParameter('power')">Power</button>
             <button onclick="chooseParameter('torque')">Torque</button>
         </div>
-        <div class="torque">
-            <label for="torque_nm">Torque (Nm)</label>
-            <input type="number" id="torque_nm" placeholder="e.g. 100">
-            <span class="unit">Nm</span>
-        </div>
-        <div class="power">
-            <label for="power_w">Power (W)</label>
-            <input type="number" id="power_w" placeholder="e.g. 100">
-            <span class="unit">W</span>
-        </div>
-        <div class="speed">
-            <label for="speed_rpm">Speed (RPM)</label>
-            <input type="number" id="speed_rpm" placeholder="e.g. 100">
-            <span class="unit">RPM</span>
-        </div>
-        <div class="btn-group">
-            <button class="btn" onclick="selected(this, 'NoGear')">No Gear</button>
-            <button class="btn" onclick="selected(this, 'WithGear')">With Gear</button>
-        </div>
-        <div id="stage" style="display: none">
-            <button class="btn" value="1" onclick="stage(this, 1)">1 stage </button>
-            <button class="btn" value="2" onclick="stage(this, 2)">2 stage </button>
-            <button class="btn" value="3" onclick="stage(this, 3)">3 stage </button>
-            <button class="btn" value="4" onclick="stage(this, 4)">4 stage </button>
-        </div>
-        <div id="dropdown" style="display: none">
-            <div id="gearInputs"></div>
-            <div class="efficiency">
-                <label for="efficiency">Efficiency (%)</label>
-                <input type="number" id="efficiency" placeholder="e.g. 75">
-                <span class="unit">%</span>
+        <form>
+            <div class="torque">
+                <label for="torque_nm">Torque (Nm)</label>
+                <input type="number" id="torque_nm" placeholder="e.g. 100">
+                <span class="unit">Nm</span>
             </div>
-            <p>Total Gear Ratio: <span id="totalRatio">-</span></p>
-        </div>
-        <button onclick="calculate_torque()">Calculate</button>
+            <div class="power">
+                <label for="power_w">Power (W)</label>
+                <input type="number" id="power_w" placeholder="e.g. 100">
+                <span class="unit">W</span>
+            </div>
+            <div class="speed">
+                <label for="speed_rpm">Speed (RPM)</label>
+                <input type="number" id="speed_rpm" placeholder="e.g. 100">
+                <span class="unit">RPM</span>
+            </div>
+            <div class="btn-group">
+                <button class="btn" onclick="selected(this, 'NoGear')">No Gear</button>
+                <button class="btn" onclick="selected(this, 'WithGear')">With Gear</button>
+            </div>
+            <div id="stage" style="display: none">
+                <button class="btn" value="1" onclick="stage(this, 1)">1 stage </button>
+                <button class="btn" value="2" onclick="stage(this, 2)">2 stage </button>
+                <button class="btn" value="3" onclick="stage(this, 3)">3 stage </button>
+                <button class="btn" value="4" onclick="stage(this, 4)">4 stage </button>
+            </div>
+            <div id="dropdown" style="display: none">
+                <div id="gearInputs"></div>
+                <div class="efficiency">
+                    <label for="efficiency">Efficiency (%)</label>
+                    <input type="number" id="efficiency" placeholder="e.g. 75">
+                    <span class="unit">%</span>
+                </div>
+                <p>Total Gear Ratio: <span id="totalRatio">-</span></p>
+            </div>
+        </form>
+        <button type="button" onclick="calculate_torque()">Calculate</button>
 
         <div class="result">
             <p>Result:<span id="result"></span><span class="unit">Nm</span></p>
@@ -71,8 +73,23 @@
                 <tbody id="tableBody"></tbody>
             </table>
         </div>
+        <form>
+            <label>
+                Please Enter GearRatio Range:
+                From <input type="number" name="from" placeholder="e.g. 10" required>
+                To <input type="number" name="to" placeholder="e.g. 10" required>
+                with increment <input type="number" name="increment" placeholder="e.g. 10" required>
+            </label>
+        </form>
+        <div>
+            <button type="button">Create Chart</button>
+        </div>
+        <div>
+            <canvas id="TorqueSpeedChart"></canvas>
+        </div>
     </div>
     <script src="./script.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </body>
 </html>
 
