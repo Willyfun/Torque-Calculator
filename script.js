@@ -1,6 +1,7 @@
 let select = "";
 let selectedStage = 0;
 let selectedParameter = "";
+let torqueSpeedChart = null;
 
 const formula = {
     power :{
@@ -159,4 +160,98 @@ function getTotalGearRatio() {
     }
 
     return totalGearRatio;
+}
+
+function TorqueSpeedchart() {
+    const from = Number(document.querySelector('[name="from"]').value);
+    const to = Number(document.querySelector('[name="to"]').value);
+    const increment = Number(document.querySelector('[name="increment"]').value);
+
+    const power_watt = Number(document.getElementById("power_w").value);
+    const speed_rpm = Number(document.getElementById("speed_rpm").value);
+
+    if (power_watt <= 0 || speed_rpm <= 0) {
+        alert("Please enter valid power and speed first.");
+        return;
+    }
+
+    if (from <= 0 || to <= 0 || increment <= 0 || from >= to) {
+        alert("Please enter a valid gear ratio range.");
+        return;
+    }
+
+    const labels = [];
+    const torqueData = [];
+    const speedData = [];
+
+    const ratedTorque = (60 * power_watt) / (2 * Math.PI * speed_rpm);
+
+    for (let gearRatio = from; gearRatio <= to; gearRatio += increment) {
+        const newTorque = ratedTorque * gearRatio;
+        const newSpeed = speed_rpm / gearRatio;
+
+        labels.push((gearRatio).toFixed(1));
+        torqueData.push(newTorque.toFixed(2));
+        speedData.push(newSpeed.toFixed(2));
+    }
+
+    const ctx = document.getElementById("TorqueSpeedChart");
+
+    if (torqueSpeedChart !== null) {
+        torqueSpeedChart.destroy();
+    }
+
+    torqueSpeedChart = new Chart(ctx, {
+        data: {
+        labels: labels,
+        datasets: [
+            {
+            type: "bar",
+            label: "Torque (Nm)",
+            data: torqueData,
+            yAxisID: "yTorque"
+            },
+            {
+            type: "bar",
+            label: "Speed (RPM)",
+            data: speedData,
+            yAxisID: "ySpeed",
+            borderWidth: 2,
+            tension: 0.3
+            }
+        ]
+        },
+        options: {
+        responsive: true,
+        scales: {
+            x: {
+            title: {
+                display: true,
+                text: "Gear Ratio"
+            }
+            },
+            yTorque: {
+            type: "linear",
+            position: "left",
+            beginAtZero: true,
+            title: {
+                display: true,
+                text: "Torque (Nm)"
+            }
+            },
+            ySpeed: {
+            type: "linear",
+            position: "right",
+            beginAtZero: true,
+            title: {
+                display: true,
+                text: "Speed (RPM)"
+            },
+            grid: {
+                drawOnChartArea: false
+            }
+            }
+        }
+        }
+    });
 }

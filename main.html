@@ -10,12 +10,13 @@
     <div class = "card">
         <h1>Motor Parameter</h1>
         <span>Please choose what to calculate:</span>
-        <div>
-            <button onclick="chooseParameter('speed')">Speed</button>
-            <button onclick="chooseParameter('power')">Power</button>
-            <button onclick="chooseParameter('torque')">Torque</button>
-        </div>
         <form>
+            <div>
+                <button type="button" onclick="chooseParameter('speed')">Speed</button>
+                <button type="button" onclick="chooseParameter('power')">Power</button>
+                <button type="button" onclick="chooseParameter('torque')">Torque</button>
+            </div>
+        </form>
             <div class="torque">
                 <label for="torque_nm">Torque (Nm)</label>
                 <input type="number" id="torque_nm" placeholder="e.g. 100">
@@ -32,14 +33,14 @@
                 <span class="unit">RPM</span>
             </div>
             <div class="btn-group">
-                <button class="btn" onclick="selected(this, 'NoGear')">No Gear</button>
-                <button class="btn" onclick="selected(this, 'WithGear')">With Gear</button>
+                <button type="button" class="btn" onclick="selected(this, 'NoGear')">No Gear</button>
+                <button type="button" class="btn" onclick="selected(this, 'WithGear')">With Gear</button>
             </div>
             <div id="stage" style="display: none">
-                <button class="btn" value="1" onclick="stage(this, 1)">1 stage </button>
-                <button class="btn" value="2" onclick="stage(this, 2)">2 stage </button>
-                <button class="btn" value="3" onclick="stage(this, 3)">3 stage </button>
-                <button class="btn" value="4" onclick="stage(this, 4)">4 stage </button>
+                <button type="button" class="btn" value="1" onclick="stage(this, 1)">1 stage </button>
+                <button type="button" class="btn" value="2" onclick="stage(this, 2)">2 stage </button>
+                <button type="button" class="btn" value="3" onclick="stage(this, 3)">3 stage </button>
+                <button type="button" class="btn" value="4" onclick="stage(this, 4)">4 stage </button>
             </div>
             <div id="dropdown" style="display: none">
                 <div id="gearInputs"></div>
@@ -49,8 +50,7 @@
                     <span class="unit">%</span>
                 </div>
                 <p>Total Gear Ratio: <span id="totalRatio">-</span></p>
-            </div>
-        </form>
+            </div>  
         <button type="button" onclick="calculate_torque()">Calculate</button>
 
         <div class="result">
@@ -82,7 +82,7 @@
             </label>
         </form>
         <div>
-            <button type="button">Create Chart</button>
+            <button type="button" onclick="TorqueSpeedchart()">Create Chart</button>
         </div>
         <div>
             <canvas id="TorqueSpeedChart"></canvas>
