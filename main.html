@@ -87,7 +87,33 @@
         <div>
             <canvas id="TorqueSpeedChart"></canvas>
         </div>
+        <div>
+            <label for="actuatorSelect">Please Choose Model:</label>
+            <select id="actuatorSelect" onchange="loadActuatorModel()">
+                <option value="">-- Select actuator model --</option>
+            </select>
+            <p>
+                Max Torque:
+                <span id="selectedMaxTorque">-</span>
+                <span class="unit">Nm</span>
+            </p>
+            <button type="button" onclick="CompareChart()">Compare</button>
+            <table id="compareTable" border="1">
+                <thead>
+                    <tr>
+                        <th>Item</th>
+                        <th>Original Model</th>
+                        <th>With Gearbox</th>
+                    </tr>
+                </thead>
+                <tbody id="compareTableBody"></tbody>
+            </table>
+            <canvas id="speedCompareChart"></canvas>
+            <canvas id="ratedTorqueCompareChart"></canvas>
+            <canvas id="maxTorqueCompareChart"></canvas>
+        </div>
     </div>
+    <script src="./actuator_models.js"></script>
     <script src="./script.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </body>

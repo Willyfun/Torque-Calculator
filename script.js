@@ -2,6 +2,9 @@ let select = "";
 let selectedStage = 0;
 let selectedParameter = "";
 let torqueSpeedChart = null;
+let speedCompareChart = null;
+let ratedTorqueCompareChart = null;
+let maxTorqueCompareChart = null;
 
 const formula = {
     power :{
@@ -22,6 +25,37 @@ const formula = {
         unit:"RPM"
     }
 };
+
+document.addEventListener("DOMContentLoaded", populateActuatorOptions);
+
+function populateActuatorOptions() {
+    const actuatorSelect = document.getElementById("actuatorSelect");
+
+    if (!actuatorSelect || typeof ActuatorModels === "undefined") {
+        return;
+    }
+
+    ActuatorModels.forEach(actuator => {
+        const option = document.createElement("option");
+        option.value = actuator.id;
+        option.textContent = actuator.model;
+        actuatorSelect.appendChild(option);
+    });
+}
+
+function loadActuatorModel() {
+    const actuatorId = Number(document.getElementById("actuatorSelect").value);
+    const actuator = ActuatorModels.find(item => item.id === actuatorId);
+
+    if (!actuator) {
+        document.getElementById("selectedMaxTorque").textContent = "-";
+        return;
+    }
+
+    document.getElementById("power_w").value = actuator.power;
+    document.getElementById("speed_rpm").value = actuator.MaxSpeed;
+    document.getElementById("selectedMaxTorque").textContent = actuator.MaxTorque;
+}
 
 function chooseParameter(parameter){
     selectedParameter = parameter;
@@ -252,6 +286,153 @@ function TorqueSpeedchart() {
             }
             }
         }
+        }
+    });
+}
+
+function CompareChart(){
+    const actuatorId = Number(document.getElementById("actuatorSelect").value);
+    const actuator = ActuatorModels.find(item => item.id === actuatorId);
+
+    if (!actuator) {
+        alert("Please choose an actuator model first.");
+        return;
+    }
+
+    if (select !== "WithGear") {
+        alert("Please select With Gear and enter the gear ratio.");
+        return;
+    }
+
+    const gearRatio = getTotalGearRatio();
+
+    if (gearRatio === null) {
+        return;
+    }
+
+    const efficiency = Number(document.getElementById("efficiency").value) / 100;
+
+    if (efficiency <= 0 || efficiency > 1) {
+        alert("Please enter efficiency between 1 and 100");
+        return;
+    }
+
+    const originalSpeed = actuator.MaxSpeed;
+    const originalRatedTorque = (60 * actuator.power) / (2 * Math.PI * actuator.MaxSpeed);
+    const originalMaxTorque = actuator.MaxTorque;
+
+    const gearboxSpeed = originalSpeed / gearRatio;
+    const gearboxRatedTorque = originalRatedTorque * gearRatio * efficiency;
+    const gearboxMaxTorque = originalMaxTorque * gearRatio * efficiency;
+
+    document.getElementById("totalRatio").textContent = gearRatio + ":1";
+    updateCompareTable({
+        originalSpeed,
+        gearboxSpeed,
+        originalRatedTorque,
+        gearboxRatedTorque,
+        originalMaxTorque,
+        gearboxMaxTorque
+    });
+    drawCompareChart({
+        originalSpeed,
+        gearboxSpeed,
+        originalRatedTorque,
+        gearboxRatedTorque,
+        originalMaxTorque,
+        gearboxMaxTorque
+    });
+}
+
+function updateCompareTable(values) {
+    const tableBody = document.getElementById("compareTableBody");
+
+    tableBody.innerHTML = `
+        <tr>
+            <td>Speed (RPM)</td>
+            <td>${values.originalSpeed.toFixed(2)}</td>
+            <td>${values.gearboxSpeed.toFixed(2)}</td>
+        </tr>
+        <tr>
+            <td>Rated Torque (Nm)</td>
+            <td>${values.originalRatedTorque.toFixed(2)}</td>
+            <td>${values.gearboxRatedTorque.toFixed(2)}</td>
+        </tr>
+        <tr>
+            <td>Max Torque (Nm)</td>
+            <td>${values.originalMaxTorque.toFixed(2)}</td>
+            <td>${values.gearboxMaxTorque.toFixed(2)}</td>
+        </tr>
+    `;
+}
+
+function drawCompareChart(values) {
+    speedCompareChart = drawSingleCompareChart(
+        "speedCompareChart",
+        speedCompareChart,
+        "Speed Comparison",
+        "Speed (RPM)",
+        values.originalSpeed,
+        values.gearboxSpeed
+    );
+
+    ratedTorqueCompareChart = drawSingleCompareChart(
+        "ratedTorqueCompareChart",
+        ratedTorqueCompareChart,
+        "Rated Torque Comparison",
+        "Rated Torque (Nm)",
+        values.originalRatedTorque,
+        values.gearboxRatedTorque
+    );
+
+    maxTorqueCompareChart = drawSingleCompareChart(
+        "maxTorqueCompareChart",
+        maxTorqueCompareChart,
+        "Max Torque Comparison",
+        "Max Torque (Nm)",
+        values.originalMaxTorque,
+        values.gearboxMaxTorque
+    );
+}
+
+function drawSingleCompareChart(canvasId, chartObject, title, label, originalValue, gearboxValue) {
+    const ctx = document.getElementById(canvasId);
+
+    if (chartObject !== null) {
+        chartObject.destroy();
+    }
+
+    return new Chart(ctx, {
+        type: "bar",
+        data: {
+            labels: ["Original Model", "With Gearbox"],
+            datasets: [
+                {
+                    label: label,
+                    data: [
+                        Number(originalValue.toFixed(2)),
+                        Number(gearboxValue.toFixed(2))
+                    ]
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    title: {
+                        display: true,
+                        text: label
+                    }
+                },
+                x: {
+                    title: {
+                        display: true,
+                        text: title
+                    }
+                }
+            }
         }
     });
 }
