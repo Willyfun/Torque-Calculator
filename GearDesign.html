@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./script.css">
+    <title>Gear Design</title>
+</head>
+<body>
+    <div class="card">
+        <button type="button" onclick="window.location.href='./main.html'">Back to Calculator</button>
+    </div>
+    <form>
+        <div class="module">
+            <label for="module">Please enter desired module:</label>
+            <input type="number" id="module" placeholder="e.g. 1">
+            <span class="unit">mm</span>
+        </div>
+        <div class="gearratio">
+            <label for="GearRatio">Please enter Gear Ratio:</label>
+            <input type="number" id="GearRatio" placeholder="e.g. 1">
+        </div>
+        <button type="button" onclick="calculate_teeth()">Calculate</button>
+    </form>
+    <div class="option" style="display: none">
+        <table id="teethtable" border="1">
+            <thead>
+                <tr>
+                    <th>Sun Gear Teeth</th>
+                    <th>Planet Gear Teeth</th>
+                    <th>Ring Gear Teeth</th>
+                    <th>Sun Pitch Diameter (mm)</th>
+                    <th>Planet Pitch Diameter (mm)</th>
+                    <th>Ring Pitch Diameter (mm)</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody id="tableBody"></tbody>
+        </table>
+        <div id="selectedDesign" class="selected-design" style="display: none">
+            <h2>Selected Gear Design</h2>
+            <p>Choose a row to continue the calculation.</p>
+        </div>
+    </div>
+    <script src="./design.js"></script>
+</body>
+</html>

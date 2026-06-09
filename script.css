@@ -21,3 +21,40 @@
 input{
   width: 80px;
 }
+
+.option {
+  width: 100%;
+  overflow-x: auto;
+}
+
+#teethtable {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 16px;
+}
+
+#teethtable th,
+#teethtable td {
+  padding: 8px;
+  text-align: center;
+  white-space: nowrap;
+}
+
+#teethtable tbody tr {
+  cursor: pointer;
+}
+
+#teethtable tbody tr:hover {
+  background: #eef7ee;
+}
+
+#teethtable tbody tr.selected-row {
+  background: #d8efd8;
+}
+
+.selected-design {
+  margin-top: 16px;
+  padding: 12px;
+  border: 1px solid green;
+  border-radius: 5px;
+}
