@@ -20,6 +20,23 @@
             <label for="GearRatio">Please enter Gear Ratio:</label>
             <input type="number" id="GearRatio" placeholder="e.g. 1">
         </div>
+        <div id="pressureangle" class="dropdown-menu">
+            <label for="PressureAngle">Please select pressure angle (&#945):</label>
+            <button type="button" onclick="selectOption('Sun Gear')">
+                <span>14.5&deg</span>
+                <small></small>
+            </button>
+
+            <button type="button" onclick="selectOption('Planet Gear')">
+                <span></span>
+                <small></small>
+            </button>
+
+            <button type="button" onclick="selectOption('Ring Gear')">
+                <span></span>
+                <small></small>
+            </button>
+        </div>
         <button type="button" onclick="calculate_teeth()">Calculate</button>
     </form>
     <div class="option" style="display: none">
