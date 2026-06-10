@@ -58,3 +58,212 @@ input{
   border: 1px solid green;
   border-radius: 5px;
 }
+
+.gear-preview-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 12px;
+}
+
+.gear-preview {
+  max-width: 320px;
+  padding: 10px;
+  border: 1px solid #b7d7b7;
+  border-radius: 5px;
+  text-align: center;
+}
+
+.gear-picture {
+  width: 185px;
+  height: 185px;
+  max-width: 100%;
+}
+
+.ring-large-picture {
+  width: 280px;
+  height: 280px;
+}
+
+.gear-picture polygon {
+  fill: #d8efd8;
+  stroke: green;
+  stroke-width: 2;
+}
+
+.gear-picture circle {
+  fill: white;
+  stroke: green;
+  stroke-width: 2;
+}
+
+.gear-picture .pitch-circle {
+  fill: none;
+  stroke: #d01818;
+  stroke-width: 0.8;
+}
+
+marker .arrow-head {
+  fill: none;
+  stroke: #111;
+  stroke-width: 1.4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+marker {
+  overflow: visible;
+}
+
+.gear-center-line {
+  stroke: #555;
+  stroke-width: 0.6;
+  stroke-dasharray: 4 3;
+}
+
+.pitch-diameter-arrow {
+  stroke: #d01818;
+  stroke-width: 1;
+  opacity: 0.9;
+  marker-end: url(#arrowHead);
+  marker-start: url(#arrowHead);
+}
+
+.pitch-label-background {
+  fill: white;
+  fill-opacity: 0.96;
+  stroke: #111;
+  stroke-width: 0.45;
+}
+
+.pitch-diameter-text,
+.pitch-diameter-value {
+  fill: #111;
+  font-family: Arial, sans-serif;
+  font-weight: bold;
+  text-anchor: middle;
+}
+
+.pitch-diameter-text {
+  font-size: 6.8px;
+}
+
+.pitch-diameter-value {
+  font-size: 6.6px;
+}
+
+.ring-outer-body {
+  fill: #d8efd8;
+  stroke: green;
+  stroke-width: 1.2;
+}
+
+.ring-inner-teeth {
+  fill: white;
+  stroke: green;
+  stroke-width: 0.45;
+}
+
+.gear-preview h3 {
+  margin: 6px 0;
+  font-size: 16px;
+}
+
+.gear-preview p {
+  margin: 4px 0;
+}
+
+.gear-diagram-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 14px;
+  margin-top: 18px;
+}
+
+.gear-info-diagram {
+  border: 1px solid #b7d7b7;
+  border-radius: 5px;
+  padding: 10px;
+}
+
+.gear-info-diagram h3 {
+  margin: 0 0 8px;
+  text-align: center;
+}
+
+.gear-info-diagram svg {
+  width: 100%;
+  max-height: 260px;
+}
+
+.tooth-fill {
+  fill: #d8edf3;
+}
+
+.diagram-line {
+  fill: none;
+  stroke: #111;
+  stroke-width: 2;
+}
+
+.reference-line {
+  stroke: #d01818;
+  stroke-width: 1;
+  stroke-dasharray: 8 6;
+}
+
+.diagram-dimension {
+  stroke: #a83d86;
+  stroke-width: 1.2;
+  marker-start: url(#arrowHead);
+  marker-end: url(#arrowHead);
+}
+
+.extension-line {
+  stroke: #a83d86;
+  stroke-width: 0.9;
+}
+
+.diagram-label {
+  fill: #111;
+  font-family: Arial, sans-serif;
+  font-size: 12px;
+}
+
+.vertical-label {
+  transform: rotate(-90deg);
+  transform-origin: 382px 116px;
+}
+
+.diameter-tip-circle {
+  fill: none;
+  stroke: #111;
+  stroke-width: 1.4;
+}
+
+.diameter-pitch-circle {
+  fill: none;
+  stroke: #d01818;
+  stroke-width: 1.5;
+}
+
+.diameter-root-circle {
+  fill: none;
+  stroke: #777;
+  stroke-width: 1.2;
+  stroke-dasharray: 5 4;
+}
+
+.simple-gear-3d path {
+  fill: #9aa9b7;
+  stroke: #4b5864;
+  stroke-width: 1.2;
+}
+
+.simple-gear-3d line {
+  stroke: #4b5864;
+  stroke-width: 1.2;
+}
+
+.back-selection-btn {
+  margin-top: 16px;
+}
