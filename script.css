@@ -61,12 +61,16 @@ input{
 
 .gear-preview-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-  gap: 12px;
+  grid-template-columns: repeat(3, 320px);
+  gap: 90px;
+  justify-content: center;
+  justify-items: center;
+  align-items: start;
 }
 
 .gear-preview {
   max-width: 320px;
+  width: 100%;
   padding: 10px;
   border: 1px solid #b7d7b7;
   border-radius: 5px;
@@ -74,14 +78,14 @@ input{
 }
 
 .gear-picture {
-  width: 185px;
-  height: 185px;
+  width: 250px;
+  height: 250px;
   max-width: 100%;
 }
 
 .ring-large-picture {
-  width: 280px;
-  height: 280px;
+  width: 250px;
+  height: 250px;
 }
 
 .gear-picture polygon {
@@ -192,7 +196,31 @@ marker {
 
 .gear-info-diagram svg {
   width: 100%;
-  max-height: 260px;
+  max-height: 290px;
+}
+
+.diameter-diagram-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  gap: 12px;
+}
+
+.single-diameter-diagram {
+  border: 1px solid #d4e8d4;
+  border-radius: 5px;
+  padding: 8px;
+  overflow: hidden;
+}
+
+.single-diameter-diagram h4 {
+  margin: 0 0 6px;
+  text-align: center;
+}
+
+@media (max-width: 760px) {
+  .gear-preview-grid {
+    grid-template-columns: 1fr;
+  }
 }
 
 .tooth-fill {
@@ -234,6 +262,37 @@ marker {
   transform-origin: 382px 116px;
 }
 
+.diameter-reference-circle {
+  fill: none;
+  stroke: #bbb;
+  stroke-width: 1;
+  stroke-dasharray: 3 3;
+}
+
+.diameter-gear-shape {
+  fill: #d8efd8;
+  stroke: green;
+  stroke-width: 1.6;
+}
+
+.diameter-gear-bore {
+  fill: white;
+  stroke: green;
+  stroke-width: 1.3;
+}
+
+.diameter-ring-body {
+  fill: #d8efd8;
+  stroke: green;
+  stroke-width: 1.6;
+}
+
+.diameter-ring-inner-teeth {
+  fill: white;
+  stroke: green;
+  stroke-width: 1;
+}
+
 .diameter-tip-circle {
   fill: none;
   stroke: #111;
@@ -251,17 +310,6 @@ marker {
   stroke: #777;
   stroke-width: 1.2;
   stroke-dasharray: 5 4;
-}
-
-.simple-gear-3d path {
-  fill: #9aa9b7;
-  stroke: #4b5864;
-  stroke-width: 1.2;
-}
-
-.simple-gear-3d line {
-  stroke: #4b5864;
-  stroke-width: 1.2;
 }
 
 .back-selection-btn {

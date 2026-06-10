@@ -73,6 +73,7 @@ function selectGearDesign(row, design) {
 
     document.getElementById("selectedDesign").style.display = "block";
     document.getElementById("selectedDesign").innerHTML = `
+        <button type="button" class="back-selection-btn" onclick="calculate_teeth()">Back to Selection Table</button>
         <h2>Selected Gear Design</h2>
         <div class="gear-preview-grid">
             ${createGearPreview("Sun Gear", design.sunGearTeeth, design.sunPitchDiameter, "sun")}
@@ -83,7 +84,6 @@ function selectGearDesign(row, design) {
             ${createToothProfileDiagram(design)}
             ${createDiameterDiagram(design)}
         </div>
-        <button type="button" class="back-selection-btn" onclick="calculate_teeth()">Back to Selection Table</button>
     `;
 }
 
@@ -234,53 +234,148 @@ function createToothProfileDiagram(design) {
                 <line class="extension-line" x1="224" y1="55" x2="224" y2="70"></line>
                 <line class="diagram-dimension open-arrow" x1="66" y1="30" x2="182" y2="30"></line>
                 <line class="diagram-dimension open-arrow" x1="182" y1="55" x2="224" y2="55"></line>
-                <line class="diagram-dimension" x1="332" y1="70" x2="332" y2="110"></line>
+                <line class="diagram-dimension" x1="362" y1="70" x2="362" y2="110"></line>
                 <line class="diagram-dimension" x1="362" y1="110" x2="362" y2="155"></line>
                 <line class="diagram-dimension" x1="392" y1="70" x2="392" y2="155"></line>
                 <text class="diagram-label" x="86" y="22">Pitch: ${formatNumber(circularPitch)} mm</text>
-                <text class="diagram-label" x="228" y="50">Tooth thickness: ${formatNumber(toothThickness)} mm</text>
-                <text class="diagram-label" x="282" y="95">Addendum: ${formatNumber(addendum)} mm</text>
-                <text class="diagram-label" x="282" y="140">Dedendum: ${formatNumber(dedendum)} mm</text>
-                <text class="diagram-label vertical-label" x="382" y="116">Tooth depth: ${formatNumber(toothDepth)} mm</text>
-                <text class="diagram-label" x="28" y="98">Reference line</text>
+                <text class="diagram-label" x="190" y="50">Tooth thickness: ${formatNumber(toothThickness)} mm</text>
+                <text class="diagram-label" x="247" y="95">Addendum: ${formatNumber(addendum)} mm</text>
+                <text class="diagram-label" x="247" y="140">Dedendum: ${formatNumber(dedendum)} mm</text>
+                <text class="diagram-label vertical-label" x="330" y="150">Tooth depth: ${formatNumber(toothDepth)} mm</text>
+                <text class="diagram-label" x="-20" y="98">Reference line</text>
             </svg>
         </div>
     `;
 }
 
 function createDiameterDiagram(design) {
-    const tipDiameter = design.sunPitchDiameter + (2 * design.module);
-    const rootDiameter = design.sunPitchDiameter - (2 * 1.25 * design.module);
-
     return `
         <div class="gear-info-diagram">
-            <h3>Sun Gear Diameters</h3>
-            <svg viewBox="0 0 420 190" aria-label="Gear diameter diagram">
+            <h3>Gear Diameters</h3>
+            <div class="diameter-diagram-grid">
+                ${createSingleDiameterDiagram("Sun Gear", design.sunPitchDiameter, design.module, false)}
+                ${createSingleDiameterDiagram("Planet Gear", design.planetPitchDiameter, design.module, false)}
+                ${createSingleDiameterDiagram("Ring Gear", design.ringPitchDiameter, design.module, true)}
+            </div>
+        </div>
+    `;
+}
+
+function createSingleDiameterDiagram(label, pitchDiameter, module, isInternalGear) {
+    const tipDiameter = isInternalGear ? pitchDiameter - (2 * module) : pitchDiameter + (2 * module);
+    const rootDiameter = isInternalGear ? pitchDiameter + (2 * 1.25 * module) : pitchDiameter - (2 * 1.25 * module);
+    const tipRadius = isInternalGear ? 42 : 58;
+    const pitchRadius = 50;
+    const rootRadius = isInternalGear ? 58 : 42;
+    const centerX = 110;
+    const centerY = 112;
+    const gearShape = isInternalGear
+        ? createDiagramInternalGear(centerX, centerY)
+        : createDiagramExternalGear(label === "Sun Gear" ? 16 : 12, centerX, centerY);
+
+    return `
+        <div class="single-diameter-diagram">
+            <h4>${label}</h4>
+            <svg viewBox="0 0 220 210" aria-label="${label} diameter reference diagram">
                 ${createArrowMarker()}
-                <circle class="diameter-tip-circle" cx="115" cy="95" r="72"></circle>
-                <circle class="diameter-pitch-circle" cx="115" cy="95" r="58"></circle>
-                <circle class="diameter-root-circle" cx="115" cy="95" r="45"></circle>
-                <line class="gear-center-line" x1="43" y1="95" x2="187" y2="95"></line>
-                <line class="gear-center-line" x1="115" y1="23" x2="115" y2="167"></line>
-                <line class="diagram-dimension" x1="63" y1="43" x2="167" y2="147"></line>
-                <line class="diagram-dimension" x1="115" y1="37" x2="115" y2="153"></line>
-                <line class="diagram-dimension" x1="83" y1="63" x2="147" y2="127"></line>
-                <text class="diagram-label" x="22" y="25">Tip diameter: ${formatNumber(tipDiameter)} mm</text>
-                <text class="diagram-label" x="190" y="35">Pitch diameter: ${formatNumber(design.sunPitchDiameter)} mm</text>
-                <text class="diagram-label" x="190" y="65">Root diameter: ${formatNumber(rootDiameter)} mm</text>
-                <g class="simple-gear-3d">
-                    <path d="M265 65 L345 35 L385 70 L305 105 Z"></path>
-                    <path d="M305 105 L385 70 L385 125 L305 160 Z"></path>
-                    <path d="M265 65 L305 105 L305 160 L265 120 Z"></path>
-                    <line x1="285" y1="72" x2="365" y2="42"></line>
-                    <line x1="300" y1="83" x2="380" y2="53"></line>
-                    <line x1="315" y1="94" x2="385" y2="68"></line>
-                </g>
-                <line class="diagram-dimension" x1="320" y1="35" x2="384" y2="12"></line>
-                <text class="diagram-label" x="350" y="18">Face width</text>
+                ${gearShape}
+                <circle class="diameter-reference-circle" cx="${centerX}" cy="${centerY}" r="66"></circle>
+                <circle class="diameter-tip-circle" cx="${centerX}" cy="${centerY}" r="${tipRadius}"></circle>
+                <circle class="diameter-pitch-circle" cx="${centerX}" cy="${centerY}" r="${pitchRadius}"></circle>
+                <circle class="diameter-root-circle" cx="${centerX}" cy="${centerY}" r="${rootRadius}"></circle>
+                <line class="gear-center-line" x1="44" y1="${centerY}" x2="176" y2="${centerY}"></line>
+                <line class="gear-center-line" x1="${centerX}" y1="${centerY - 66}" x2="${centerX}" y2="${centerY + 66}"></line>
+                <line class="diagram-dimension" x1="${centerX - tipRadius * 0.7}" y1="${centerY - tipRadius * 0.7}" x2="${centerX + tipRadius * 0.7}" y2="${centerY + tipRadius * 0.7}"></line>
+                <line class="diagram-dimension" x1="${centerX}" y1="${centerY - pitchRadius}" x2="${centerX}" y2="${centerY + pitchRadius}"></line>
+                <line class="diagram-dimension" x1="${centerX - rootRadius * 0.7}" y1="${centerY + rootRadius * 0.7}" x2="${centerX + rootRadius * 0.7}" y2="${centerY - rootRadius * 0.7}"></line>
+                <text class="diagram-label" x="12" y="16">Tip: ${formatNumber(tipDiameter)} mm</text>
+                <text class="diagram-label" x="12" y="32">Pitch: ${formatNumber(pitchDiameter)} mm</text>
+                <text class="diagram-label" x="12" y="48">Root: ${formatNumber(rootDiameter)} mm</text>
             </svg>
         </div>
     `;
+}
+
+function createDiagramExternalGear(teeth, centerX, centerY) {
+    const points = createGearToothPointsAt(teeth, centerX, centerY, 42, 58);
+
+    return `
+        <polygon class="diameter-gear-shape" points="${points.join(" ")}"></polygon>
+        <circle class="diameter-gear-bore" cx="${centerX}" cy="${centerY}" r="12"></circle>
+    `;
+}
+
+function createDiagramInternalGear(centerX, centerY) {
+    const innerTeeth = createInternalGearToothPointsAt(28, centerX, centerY, 58, 42);
+
+    return `
+        <circle class="diameter-ring-body" cx="${centerX}" cy="${centerY}" r="66"></circle>
+        <polygon class="diameter-ring-inner-teeth" points="${innerTeeth.join(" ")}"></polygon>
+    `;
+}
+
+function createGearToothPointsAt(toothCount, centerX, centerY, rootRadius, outerRadius) {
+    const points = [];
+
+    for (let tooth = 0; tooth < toothCount; tooth++) {
+        const toothAngle = (Math.PI * 2) / toothCount;
+        const baseAngle = tooth * toothAngle - Math.PI / 2;
+        const angles = [
+            baseAngle,
+            baseAngle + toothAngle * 0.18,
+            baseAngle + toothAngle * 0.42,
+            baseAngle + toothAngle * 0.60,
+            baseAngle + toothAngle * 0.82
+        ];
+        const radii = [
+            rootRadius,
+            outerRadius,
+            outerRadius,
+            rootRadius,
+            rootRadius
+        ];
+
+        angles.forEach((angle, index) => {
+            const radius = radii[index];
+            const x = centerX + Math.cos(angle) * radius;
+            const y = centerY + Math.sin(angle) * radius;
+            points.push(`${x.toFixed(2)},${y.toFixed(2)}`);
+        });
+    }
+
+    return points;
+}
+
+function createInternalGearToothPointsAt(toothCount, centerX, centerY, rootRadius, innerToothRadius) {
+    const points = [];
+
+    for (let tooth = 0; tooth < toothCount; tooth++) {
+        const toothAngle = (Math.PI * 2) / toothCount;
+        const baseAngle = tooth * toothAngle - Math.PI / 2;
+        const angles = [
+            baseAngle,
+            baseAngle + toothAngle * 0.12,
+            baseAngle + toothAngle * 0.46,
+            baseAngle + toothAngle * 0.58,
+            baseAngle + toothAngle * 0.88
+        ];
+        const radii = [
+            rootRadius,
+            innerToothRadius,
+            innerToothRadius,
+            rootRadius,
+            rootRadius
+        ];
+
+        angles.forEach((angle, index) => {
+            const radius = radii[index];
+            const x = centerX + Math.cos(angle) * radius;
+            const y = centerY + Math.sin(angle) * radius;
+            points.push(`${x.toFixed(2)},${y.toFixed(2)}`);
+        });
+    }
+
+    return points;
 }
 
 function createArrowMarker() {
