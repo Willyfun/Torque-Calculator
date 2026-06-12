@@ -288,9 +288,9 @@ function createSingleDiameterDiagram(label, pitchDiameter, module, isInternalGea
                 <line class="diagram-dimension" x1="${centerX - tipRadius * 0.7}" y1="${centerY - tipRadius * 0.7}" x2="${centerX + tipRadius * 0.7}" y2="${centerY + tipRadius * 0.7}"></line>
                 <line class="diagram-dimension" x1="${centerX}" y1="${centerY - pitchRadius}" x2="${centerX}" y2="${centerY + pitchRadius}"></line>
                 <line class="diagram-dimension" x1="${centerX - rootRadius * 0.7}" y1="${centerY + rootRadius * 0.7}" x2="${centerX + rootRadius * 0.7}" y2="${centerY - rootRadius * 0.7}"></line>
-                <text class="diagram-label" x="12" y="16">Tip: ${formatNumber(tipDiameter)} mm</text>
-                <text class="diagram-label" x="12" y="32">Pitch: ${formatNumber(pitchDiameter)} mm</text>
-                <text class="diagram-label" x="12" y="48">Root: ${formatNumber(rootDiameter)} mm</text>
+                <text class="diagram-label tip-label" x="12" y="16">Tip: ${formatNumber(tipDiameter)} mm</text>
+                <text class="diagram-label pitch-label" x="12" y="32">Pitch: ${formatNumber(pitchDiameter)} mm</text>
+                <text class="diagram-label root-label" x="12" y="48">Root: ${formatNumber(rootDiameter)} mm</text>
             </svg>
         </div>
     `;
@@ -425,3 +425,17 @@ const pitch_diameter = {
         unit:"mm"
     }
 };
+
+function toggleDropdown() {
+    const menu = document.getElementById("dropdownMenu");
+    menu.style.display = menu.style.display === "block" ? "none" : "block";
+}
+
+function selectOption(value) {
+    document.getElementById("dropdownButton").textContent = value;
+    document.getElementById("dropdownMenu").style.display = "none";
+}
+
+function calculate_force(){
+    
+}

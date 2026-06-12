@@ -295,23 +295,147 @@ marker {
 
 .diameter-tip-circle {
   fill: none;
-  stroke: #111;
-  stroke-width: 1.4;
+  stroke: #1665d8;
+  stroke-width: 1.7;
 }
 
 .diameter-pitch-circle {
   fill: none;
   stroke: #d01818;
-  stroke-width: 1.5;
+  stroke-width: 1.8;
 }
 
 .diameter-root-circle {
   fill: none;
-  stroke: #777;
-  stroke-width: 1.2;
+  stroke: #7b3fb5;
+  stroke-width: 1.7;
   stroke-dasharray: 5 4;
+}
+
+.tip-label {
+  fill: #1665d8;
+  font-weight: bold;
+}
+
+.pitch-label {
+  fill: #d01818;
+  font-weight: bold;
+}
+
+.root-label {
+  fill: #7b3fb5;
+  font-weight: bold;
 }
 
 .back-selection-btn {
   margin-top: 16px;
+}
+
+.custom-dropdown {
+  position: relative;
+  width: 120px;
+  display: inline-block;
+}
+
+.pressureangle {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.custom-dropdown > button {
+  width: 100%;
+  padding: 8px;
+  text-align: left;
+}
+
+.dropdown-menu {
+  display: none;
+  position: absolute;
+  width: 120px;
+  background: white;
+  border: 1px solid #ccc;
+  z-index: 10;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+}
+
+.dropdown-menu > button {
+  width: 100%;
+  padding: 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  background: white;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+}
+
+.dropdown-menu > button:hover {
+  background: #eef7ee;
+}
+
+.info-symbol {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+  width: 18px;
+  height: 18px;
+  border: 1px solid green;
+  border-radius: 50%;
+  color: green;
+  font-weight: bold;
+  font-size: 12px;
+  line-height: 1;
+}
+
+.tooltip {
+  display: none;
+  position: absolute;
+  left: 26px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 220px;
+  padding: 8px 10px;
+  background: #1f2933;
+  color: white;
+  font-size: 12px;
+  border-radius: 5px;
+  font-weight: normal;
+  line-height: 1.45;
+  text-align: left;
+  letter-spacing: 0;
+  z-index: 30;
+  pointer-events: none;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.18);
+  white-space: normal;
+}
+
+.tooltip::before {
+  content: "";
+  position: absolute;
+  left: -5px;
+  top: 50%;
+  transform: translateY(-50%);
+  border-top: 5px solid transparent;
+  border-bottom: 5px solid transparent;
+  border-right: 5px solid #1f2933;
+}
+
+.tooltip span {
+  display: block;
+  margin-bottom: 5px;
+}
+
+.tooltip span:last-child {
+  margin-bottom: 0;
+}
+
+.info-symbol:hover .tooltip,
+.info-symbol:focus .tooltip {
+  display: block;
 }
